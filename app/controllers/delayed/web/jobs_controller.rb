@@ -31,7 +31,7 @@ module Delayed
       helper_method :job
 
       def jobs
-        @jobs ||= Delayed::Web::Job.all
+        @jobs ||= Delayed::Web::Job.where('run_at IS NULL')
       end
       helper_method :jobs
     end
