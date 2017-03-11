@@ -3,6 +3,11 @@
 <div class="page-header">
   <h1>Scheduled Email <%= title %></h1>
   <h3><%= t('delayed/web.views.server_time') %> <%=dt Time.now %> PST</h3>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to('Main App', main_app.root_path) %></li>
+    <li class="breadcrumb-item"><%= link_to('Queued Jobs', root_path) %></li>
+    <li class="breadcrumb-item">Scheduled Emails</li>
+  </ol>
 </div>
 
 <table class="table table-bordered">

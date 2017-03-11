@@ -4950,29 +4950,42 @@ input[type="submit"].btn.btn-mini {
 }
 
 .breadcrumb {
-  padding: 8px 15px;
-  margin: 0 0 20px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  margin-left: 0;
   list-style: none;
-  background-color: #f5f5f5;
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
+  background-color: #eceeef;
+  border-radius: 0.25rem;
 }
 
-.breadcrumb > li {
+.breadcrumb::after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.breadcrumb-item {
+  float: left;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
   display: inline-block;
-  *display: inline;
-  text-shadow: 0 1px 0 #ffffff;
-  *zoom: 1;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  color: #636c72;
+  content: "/";
 }
 
-.breadcrumb > li > .divider {
-  padding: 0 5px;
-  color: #ccc;
+.breadcrumb-item + .breadcrumb-item:hover::before {
+  text-decoration: underline;
 }
 
-.breadcrumb > .active {
-  color: #999999;
+.breadcrumb-item + .breadcrumb-item:hover::before {
+  text-decoration: none;
+}
+
+.breadcrumb-item.active {
+  color: #636c72;
 }
 
 .pagination {
