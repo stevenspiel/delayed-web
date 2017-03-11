@@ -1,0 +1,64 @@
+<% title t('delayed/web.views.jobs') %>
+
+<div class="page-header">
+  <h1>Scheduled Email <%= title %></h1>
+  <h3><%= t('delayed/web.views.server_time') %> <%=dt Time.now %> PST</h3>
+</div>
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th><%= t('delayed/web.views.id') %></th>
+    <th><%= t('delayed/web.views.status') %></th>
+    <th><%= t('delayed/web.views.created_at') %></th>
+    <th><%= t('delayed/web.views.run_at') %></th>
+    <th><%= t('delayed/web.views.subject') %></th>
+    <th><%= t('delayed/web.views.to') %></th>
+    <th><%= t('delayed/web.views.email_type') %></th>
+    <th><%= t('delayed/web.views.attempts') %></th>
+    <th style="min-width: 75px;"><%= t('delayed/web.views.last_error') %></th>
+    <th style="min-width: 135px"><%= t('delayed/web.views.actions') %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% if scheduled_email.any? %>
+      <% scheduled_email.each do |job| %>
+          <tr>
+            <td><%= link_to "##{job.id}", job_path(job) %></td>
+            <td>
+            <span class="<%= status_dom_class(job.status) %>">
+              <%= t(job.status, scope: 'delayed/web.views.statuses').capitalize %>
+            </span>
+            </td>
+            <td style="font-size: 12px;"><%=dt job.created_at  %></td>
+            <td style="font-size: 12px;"><%=dt job.run_at  %></td>
+            <td><%= job.subject %></td>
+            <td><%= job.to %></td>
+            <td><%= job.email_type %></td>
+            <td><%= job.attempts %></td>
+            <td>
+              <% if job.last_error.present? %>
+                  <%= link_to truncate(dt(job.last_error)), job_path(job) %>
+              <% else %>
+                  <span class="label label-success"><%= t('delayed/web.views.errors.empty') %></span>
+              <% end %>
+            </td>
+            <td>
+              <% if job.can_queue? %>
+                <%= button_to t('delayed/web.views.buttons.run_next'), queue_job_path(job), method: :put, class: 'btn btn-mini btn-action', form_class: 'btn-rails pull-left', title: t('delayed/web.views.buttons.run_next') %>
+              <% end %>
+              <% if job.can_destroy? %>
+                <%= button_to t('delayed/web.views.buttons.delete'), job_path(job), method: :delete, class: 'btn btn-danger btn-mini btn-action', form_class: 'btn-rails pull-right', title: t('delayed/web.views.buttons.delete'), onclick: "return confirm('#{t('delayed/web.views.confirm.delete')}')" %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+  <% else %>
+      <tr>
+        <td colspan="9">
+          <%= t('delayed/web.views.queue.empty') %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

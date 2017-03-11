@@ -3,5 +3,6 @@ Delayed::Web::Engine.routes.draw do
 
   resources :jobs, only: [:destroy, :index, :show] do
     put :queue, on: :member
+    get :scheduled_email, on: :collection
   end
 end

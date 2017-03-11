@@ -23,6 +23,11 @@ module Delayed
         redirect_to jobs_path
       end
 
+      def scheduled_email
+        @scheduled_email = Delayed::Web::Job.where('run_at IS NOT NULL')
+      end
+      helper_method :scheduled_email
+
       private
 
       def job

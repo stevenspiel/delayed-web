@@ -7,13 +7,16 @@ en:
       status: Status
       created_at: Created At
       run_at: Run At
-      attempts: Attempts
+      attempts: ''
       last_error: Last Error
       server_time: Server Time
       handler: Handler
       actions: Actions
+      to: To
+      subject: Applicant
+      email_type: Email
       buttons:
-        run_next: Run Next
+        run_next: Run
         delete: Delete
       queue:
         empty: An empty queue is a good queue.
