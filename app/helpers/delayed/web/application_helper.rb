@@ -8,6 +8,12 @@ module Delayed
         else               'alert-info'
         end
       end
+
+      def dt(date)
+        return '' unless date.respond_to?(:to_datetime)
+
+        l(date.to_datetime.in_time_zone('Pacific Time (US & Canada)'), format: :short)
+      end
     end
   end
 end
