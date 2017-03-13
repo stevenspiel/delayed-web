@@ -15,10 +15,6 @@ module Delayed
         'failed'
       end
 
-      def can_destroy?
-        false
-      end
-
       def can_queue?
         false
       end
