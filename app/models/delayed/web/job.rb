@@ -5,6 +5,8 @@ module Delayed
     class Job
       extend SingleForwardable
 
+      def_delegator :backend, :decorated
+      def_delegator :backend, :paginated_where
       def_delegator :backend, :where
       def_delegator :backend, :all
       def_delegator :backend, :find

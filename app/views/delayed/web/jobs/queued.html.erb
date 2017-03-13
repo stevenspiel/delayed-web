@@ -1,7 +1,7 @@
 <% title t('delayed/web.views.jobs') %>
 
 <div class="page-header">
-  <h1>Queued <%= title %></h1>
+  <h1>Queued (<%= @paginator.count %> <%= title %>)</h1>
   <h3><%= t('delayed/web.views.server_time') %> <%=dt Time.now %> PST</h3>
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><%= link_to('Main App', main_app.root_path) %></li>
@@ -23,8 +23,8 @@
     </tr>
   </thead>
   <tbody>
-    <% if jobs.any? %>
-      <% jobs.each do |job| %>
+    <% if @jobs.any? %>
+      <% @jobs.each do |job| %>
         <tr>
           <td><%= link_to "##{job.id}", job_path(job) %></td>
           <td>
@@ -61,3 +61,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate(@paginator) %>

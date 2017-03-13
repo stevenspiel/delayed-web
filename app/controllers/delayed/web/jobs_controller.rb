@@ -24,21 +24,21 @@ module Delayed
       end
 
       def scheduled_email
-        @scheduled_email = Delayed::Web::Job.where('run_at IS NOT NULL')
+        where = "run_at IS NOT NULL AND handler LIKE '%job_class: ActionMailer::DeliveryJob%'"
+        @paginator = Delayed::Web::Job.paginated_where(params[:page], where)
+        @scheduled_emails = Delayed::Web::Job.decorated(@paginator)
       end
-      helper_method :scheduled_email
 
-      private
+      def queued
+        where = 'run_at IS NULL'
+        @paginator = Delayed::Web::Job.paginated_where(params[:page], where)
+        @jobs = Delayed::Web::Job.decorated(@paginator)
+      end
 
       def job
-        @job ||= Delayed::Web::Job.find params[:id]
+        @job = Delayed::Web::Job.find params[:id]
       end
       helper_method :job
-
-      def jobs
-        @jobs ||= Delayed::Web::Job.where('run_at IS NULL')
-      end
-      helper_method :jobs
     end
   end
 end
