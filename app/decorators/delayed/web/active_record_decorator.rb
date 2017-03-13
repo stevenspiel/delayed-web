@@ -27,9 +27,12 @@ module Delayed
         parts = string.split('/')
         main_app_class, id = parts.last(2)
         "::#{main_app_class}".constantize.find(id)
+      rescue ActiveRecord::RecordNotFound
+        nil
       end
 
       def format_obj(obj)
+        return 'RECORD NOT FOUND' unless obj.present?
         "#{obj} (#{obj.id}) <br>#{obj.try(:email)}".html_safe
       end
 
