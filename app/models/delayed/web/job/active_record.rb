@@ -1,7 +1,7 @@
 module Delayed
   module Web
     class Job::ActiveRecord
-      def self.find *args
+      def self.find(*args)
         decorate Delayed::Job.find(*args)
       end
 
@@ -37,7 +37,7 @@ module Delayed
 
       def self.decorate job
         job = StatusDecorator.new job
-        job = ActiveRecordDecorator.new job
+        job = Delayed::Web::Decorator.new(job)
         job
       end
     end
