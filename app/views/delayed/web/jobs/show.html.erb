@@ -2,8 +2,15 @@
 
 <div class="page-header">
   <h1>
-    <%= link_to t('delayed/web.views.jobs'), jobs_path %> / <%= title %>
+    <%= title %>
   </h1>
+  <h3>Scheduled for <%="#{dt(job.run_at)} #{' PST' if job.run_at}".presence || 'Immediately' %></h3>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to('Main App', main_app.root_path) %></li>
+    <li class="breadcrumb-item"><%= link_to('Queued Jobs', root_path) %></li>
+    <li class="breadcrumb-item"><%= link_to('Scheduled Emails', scheduled_email_jobs_path) %></li>
+    <li class="breadcrumb-item"><%= title %></li>
+  </ol>
   <div class="btn-group">
     <% if job.can_queue? %>
       <%= button_to t('delayed/web.views.buttons.run_next'), queue_job_path(job), method: :put, class: 'btn', form_class: 'btn-rails pull-left' %>
