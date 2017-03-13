@@ -9,7 +9,7 @@ module Delayed
           status = t(job.status, scope: 'delayed/web.views.statuses')
           flash[:alert] = t(:alert, scope: 'delayed/web.flashes.jobs.queued', status: status)
         end
-        redirect_to jobs_path
+        redirect_to :back
       end
 
       def destroy
@@ -20,7 +20,7 @@ module Delayed
           status = t(job.status, scope: 'delayed/web.views.statuses')
           flash[:alert] = t(:alert, scope: 'delayed/web.flashes.jobs.destroyed', status: status)
         end
-        redirect_to jobs_path
+        redirect_to :back
       end
 
       def scheduled_email
