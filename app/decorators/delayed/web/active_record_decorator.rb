@@ -1,8 +1,6 @@
 module Delayed
   module Web
     class ActiveRecordDecorator < SimpleDelegator
-      include ActiveModel::Serialization
-
       def queue! now = Time.current
         update_attributes! run_at: now, failed_at: nil, last_error: nil
       end
@@ -16,7 +14,7 @@ module Delayed
       end
 
       def email_type
-        "#{mailer}##{method}"
+        "#{mailer} #{method}"
       end
 
       private
@@ -32,7 +30,7 @@ module Delayed
       end
 
       def format_obj(obj)
-        "#{obj} (#{obj.id})"
+        "#{obj} (#{obj.id}) <br>#{obj.try(:email)}".html_safe
       end
 
       def mailer
@@ -40,7 +38,7 @@ module Delayed
       end
 
       def method
-        handler[:arguments][1]
+        handler[:arguments][1].humanize.downcase
       end
     end
   end
