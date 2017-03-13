@@ -39,4 +39,4 @@ en:
 
   time:
     formats:
-      short: '%d/%m/%Y at %r'
+      short: '%m/%d/%Y at %r'
