@@ -1,14 +1,14 @@
 <% title t('delayed/web.views.jobs') %>
 
 <div class="page-header">
-  <h1>Queued (<%= @paginator.count %> <%= title %>)</h1>
+  <h1>Health Check Tasks (<%= @tasks.count %> Tasks)</h1>
   <h3><%= t('delayed/web.views.server_time') %> <%=dt Time.now %> PST</h3>
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><%= link_to('Main App', main_app.root_path) %></li>
-    <li class="breadcrumb-item">Queued Jobs</li>
+    <li class="breadcrumb-item"><%= link_to('Queued Jobs', root_path) %></li>
     <li class="breadcrumb-item"><%= link_to('Scheduled Emails', scheduled_email_jobs_path) %></li>
     <li class="breadcrumb-item"><%= link_to('Health Check', health_check_jobs_path) %></li>
-    <li class="breadcrumb-item"><%= link_to('Tasks', health_check_tasks_jobs_path) %></li>
+    <li class="breadcrumb-item">Tasks</li>
   </ol>
 </div>
 
@@ -16,8 +16,9 @@
   <thead>
     <tr>
       <th><%= t('delayed/web.views.id') %></th>
+      <th>Job</th>
       <th><%= t('delayed/web.views.status') %></th>
-      <th><%= t('delayed/web.views.created_at') %></th>
+      <th>Task Created</th>
       <th><%= t('delayed/web.views.run_at') %></th>
       <th><%= t('delayed/web.views.attempts') %></th>
       <th style="width: 190px;"><%= t('delayed/web.views.last_error') %></th>
@@ -25,16 +26,18 @@
     </tr>
   </thead>
   <tbody>
-    <% if @jobs.any? %>
-      <% @jobs.each do |job| %>
+    <% if @tasks.any? %>
+      <% @tasks.each do |task| %>
+        <% job = Delayed::Web::TaskJobDecorator.new(task) %>
         <tr>
-          <td><%= link_to "##{job.id}", job_path(job) %></td>
+          <td><%= task.id %></td>
+          <td><%= task.job ? link_to("##{task.job_id}", job_path(task.job_id)) : task.job_id %></td>
           <td>
             <span class="<%= status_dom_class(job.status) %>">
               <%= t(job.status, scope: 'delayed/web.views.statuses').capitalize %>
             </span>
           </td>
-          <td style="font-size: 12px;"><%=dt job.created_at  %></td>
+          <td style="font-size: 12px;"><%=dt task.created_at  %></td>
           <td style="font-size: 12px;"><%=dt job.run_at  %></td>
           <td><%= job.attempts %></td>
           <td>
@@ -64,4 +67,4 @@
   </tbody>
 </table>
 
-<%= will_paginate(@paginator) %>
+<%= will_paginate(@tasks) %>

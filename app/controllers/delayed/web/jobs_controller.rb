@@ -35,7 +35,15 @@ module Delayed
         @jobs = Delayed::Web::Job.decorated(@paginator)
       end
 
-      def job
+      def health_check
+        where = "handler LIKE '#{health_check_task_matcher}'"
+        @paginator = Delayed::Web::Job.paginated_where(params[:page], where)
+        @jobs = Delayed::Web::Job.decorated(@paginator)
+      end
+
+      def health_check_tasks
+        @tasks = ::DelayedJob::HealthCheckTask.paginate(page: params[:page], per_page: 50)
+      end
 
       helper_method def job
         @job = Delayed::Web::Job.find params[:id]
