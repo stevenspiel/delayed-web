@@ -9,14 +9,14 @@ module Delayed
         decorator.send(method, *args, &block)
       end
 
-      def respond_to_missing?(method_name, include_private = false)
+      def respond_to_missing?(method_name, _include_private = false)
         decorator.respond_to?(method_name) || super
       end
 
       def decorator
         @decorator ||= @task.job.present? ?
           Delayed::Web::Decorator.new(Delayed::Web::StatusDecorator.new(@task.job)) :
-          OpenStruct.new(status: :failed, last_error: true)
+          OpenStruct.new(status: 'failed', last_error: true)
       end
     end
   end
