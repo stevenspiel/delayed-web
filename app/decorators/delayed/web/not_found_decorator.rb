@@ -8,7 +8,7 @@ module Delayed
       end
 
       def subject
-        'NOT FOUND'
+        "NOT FOUND (#{subject_id})"
       end
 
       def status
@@ -21,6 +21,10 @@ module Delayed
 
       def last_error
         true
+      end
+
+      private def subject_id
+        attributes['handler'].split('/LeaseApplicant/').last.match(/\d+/).to_s
       end
     end
   end
