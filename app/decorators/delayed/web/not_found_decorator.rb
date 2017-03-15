@@ -20,7 +20,7 @@ module Delayed
       end
 
       def last_error
-        true
+        attributes['last_error']
       end
 
       private def subject_id
