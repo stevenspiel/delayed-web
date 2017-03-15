@@ -47,7 +47,7 @@ module Delayed
       end
 
       def health_check_tasks
-        @tasks = ::DelayedJob::HealthCheckTask.paginate(page: params[:page], per_page: 50)
+        @tasks = ::DelayedJob::HealthCheckTask.order('job_id desc').paginate(page: params[:page], per_page: 50)
       end
 
       helper_method def job
