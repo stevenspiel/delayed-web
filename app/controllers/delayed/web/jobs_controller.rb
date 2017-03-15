@@ -40,6 +40,12 @@ module Delayed
         @jobs = Delayed::Web::Job.decorated(@paginator)
       end
 
+      def failed
+        where = 'last_error IS NOT NULL'
+        @paginator = Delayed::Web::Job.paginated_where(params[:page], where)
+        @jobs = Delayed::Web::Job.decorated(@paginator)
+      end
+
       def health_check
         where = "handler LIKE '#{health_check_task_matcher}'"
         @paginator = Delayed::Web::Job.paginated_where(params[:page], where)
