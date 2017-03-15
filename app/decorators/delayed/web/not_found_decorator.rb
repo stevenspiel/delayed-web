@@ -12,7 +12,7 @@ module Delayed
       end
 
       def status
-        'failed'
+        'missing'
       end
 
       def can_queue?
