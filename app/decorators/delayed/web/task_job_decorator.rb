@@ -16,7 +16,7 @@ module Delayed
       def decorator
         @decorator ||= @task.job.present? ?
           Delayed::Web::Decorator.new(Delayed::Web::StatusDecorator.new(@task.job)) :
-          OpenStruct.new(status: 'failed', last_error: true)
+          OpenStruct.new(status: 'failed', last_error: '')
       end
     end
   end
