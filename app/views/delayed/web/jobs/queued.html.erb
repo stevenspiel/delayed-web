@@ -1,20 +1,6 @@
 <% title t('delayed/web.views.jobs') %>
 
-<div class="page-header">
-  <h1>Queued (<%= @paginator.count %> <%= title %>)</h1>
-  <h3>
-    <span class="pull-right"><%= link_to('Main App', main_app.root_path, class: :subtle) %></span>
-    <%= t('delayed/web.views.server_time') %> <%=dt Time.now %> PST
-  </h3>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><%= link_to('All', root_path) %></li>
-    <li class="breadcrumb-item">Queued</li>
-    <li class="breadcrumb-item"><%= link_to('Failed', failed_jobs_path) %></li>
-    <li class="breadcrumb-item"><%= link_to('Scheduled Emails', scheduled_email_jobs_path) %></li>
-    <li class="breadcrumb-item"><%= link_to('Health Check', health_check_jobs_path) %></li>
-    <li class="breadcrumb-item"><%= link_to('Tasks', health_check_tasks_jobs_path) %></li>
-  </ol>
-</div>
+<%= render 'header', count: @paginator.count, current: 'Queued' %>
 
 <table class="table table-bordered">
   <thead>

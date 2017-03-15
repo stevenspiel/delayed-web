@@ -1,0 +1,8 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><%= link_to_if(current != 'All', 'All', root_path) %></li>
+  <li class="breadcrumb-item"><%= link_to_if(current != 'Queued', 'Queued', queued_jobs_path) %></li>
+  <li class="breadcrumb-item"><%= link_to_if(current != 'Failed', 'Failed', failed_jobs_path) %></li>
+  <li class="breadcrumb-item"><%= link_to_if(current != 'Scheduled Emails', 'Scheduled Emails', scheduled_email_jobs_path) %></li>
+  <li class="breadcrumb-item"><%= link_to_if(current != 'Health Check', 'Health Check', health_check_jobs_path) %></li>
+  <li class="breadcrumb-item"><%= link_to_if(current != 'Tasks', 'Tasks', health_check_tasks_jobs_path) %></li>
+</ol>
