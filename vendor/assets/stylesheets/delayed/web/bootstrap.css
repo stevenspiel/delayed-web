@@ -241,6 +241,16 @@ a:focus {
   text-decoration: underline;
 }
 
+a.subtle {
+  font-weight: normal;
+}
+
+a.subtle:hover,
+a.subtle:focus {
+  text-decoration: none;
+  font-weight: normal;
+}
+
 .img-rounded {
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;

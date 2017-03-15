@@ -23,6 +23,11 @@ module Delayed
         redirect_to :back
       end
 
+      def index
+        @paginator = Delayed::Web::Job.paginated_where(params[:page], nil)
+        @jobs = Delayed::Web::Job.decorated(@paginator)
+      end
+
       def scheduled_email
         where = "run_at IS NOT NULL AND handler LIKE '#{mailer_matcher}'"
         @paginator = Delayed::Web::Job.paginated_where(params[:page], where)
