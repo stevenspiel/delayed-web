@@ -17,7 +17,7 @@
   <tbody>
     <% if @jobs.any? %>
       <% @jobs.each do |job| %>
-        <tr>
+        <tr class="scheduled <%= execution_class(job.run_at) %>">
           <td><%= link_to "##{job.id}", job_path(job) %></td>
           <td>
             <span class="<%= status_dom_class(job.status) %>">
@@ -25,7 +25,7 @@
             </span>
           </td>
           <td style="font-size: 12px;"><%=dt job.created_at  %></td>
-          <td style="font-size: 12px;"><%=dt job.run_at  %></td>
+          <td style="font-size: 12px;" class="run-time"><%=dt job.run_at  %></td>
           <td><%= job.attempts %></td>
           <td>
             <% if job.last_error %>

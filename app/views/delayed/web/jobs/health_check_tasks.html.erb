@@ -19,7 +19,7 @@
     <% if @tasks.any? %>
       <% @tasks.each do |task| %>
         <% job = Delayed::Web::TaskJobDecorator.new(task) %>
-        <tr>
+        <tr class="scheduled <%= execution_class(job.run_at) %>">
           <td><%= task.id %></td>
           <td><%= task.job ? link_to("##{task.job_id}", job_path(task.job_id)) : task.job_id %></td>
           <td>
@@ -28,7 +28,7 @@
             </span>
           </td>
           <td style="font-size: 12px;"><%=dt task.created_at  %></td>
-          <td style="font-size: 12px;"><%=dt job.run_at  %></td>
+          <td style="font-size: 12px;" class="run-time"><%=dt job.run_at  %></td>
           <td><%= job.attempts %></td>
           <td>
             <% if job.last_error %>

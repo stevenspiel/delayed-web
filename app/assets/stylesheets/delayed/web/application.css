@@ -15,8 +15,7 @@
   position: relative;
 }
 
-/* Positions a button group to the right of the header.
- */
+/* Positions a button group to the right of the header. */
 .page-header .btn-group {
   position: absolute;
   right: 0;
@@ -27,8 +26,7 @@
   margin-left: 10px;
 }
 
-/* Whitespace between the alert and top of the page.
- */
+/* Whitespace between the alert and top of the page. */
 .alert {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -40,4 +38,14 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 65px !important;
+}
+
+/* Bold entire lines of jobs to be run immediately */
+tr.scheduled.immediately td {
+  font-weight: bold;
+}
+
+/* Bold the run_at field if it will be run in the next day */
+tr.scheduled.soon td.run-time {
+  font-weight: bold;
 }
