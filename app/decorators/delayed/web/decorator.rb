@@ -14,7 +14,7 @@ module Delayed
 
         "::#{main_app_class}".constantize.find(to_object_id)
       rescue
-        'Object not found'
+        OpenStruct.new(to_s: 'Object not found')
       end
 
       def initialize(job)
