@@ -1,10 +1,20 @@
 module Delayed
   module Web
     class Decorator
+      # TODO: make config option
+      TO_OBJECT = 'LeaseApplicant'.freeze
+
       def self.get_obj(handler)
-        parts = handler[:arguments].last.values[0].split('/')
-        main_app_class, id = parts.last(2)
-        "::#{main_app_class}".constantize.find_by(id: id)
+        to_object_id = handler[:arguments].find do |arg|
+          parts = arg.values[0].split('/')
+          klass, id = parts.last(2)
+          next false unless klass == TO_OBJECT
+          id
+        end
+
+        "::#{main_app_class}".constantize.find(to_object_id)
+      rescue
+        'Object not found'
       end
 
       def initialize(job)
