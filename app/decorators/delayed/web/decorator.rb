@@ -5,16 +5,19 @@ module Delayed
       TO_OBJECT = 'LeaseApplicant'.freeze
 
       def self.get_obj(handler)
-        to_object_id = handler[:arguments].find do |arg|
+        id = nil
+
+        handler[:arguments].find do |arg|
+          next false unless arg.is_a?(Hash)
           parts = arg.values[0].split('/')
           klass, id = parts.last(2)
           next false unless klass == TO_OBJECT
           id
         end
 
-        "::#{main_app_class}".constantize.find(to_object_id)
-      rescue
-        OpenStruct.new(to_s: 'Object not found')
+        "::#{TO_OBJECT}".constantize.find(id)
+      rescue => e
+        OpenStruct.new(to_s: e.message)
       end
 
       def initialize(job)
